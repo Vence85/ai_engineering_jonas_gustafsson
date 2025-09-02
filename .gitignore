@@ -209,3 +209,7 @@ __marimo__/
 
 #vscode
 .vscode
+
+#.env
+.env
+env
