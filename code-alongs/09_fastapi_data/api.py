@@ -3,13 +3,13 @@ from data_processing import DataExplorer
 
 app = FastAPI()
 
-explorer = DataExplorer(limit=100)
+explorer = DataExplorer()
 
-@app.get("/sales")
+@app.get("/api/sales")
 async def read_sales():
     return explorer.df.to_dict(orient="records")
 
-@app.get("/summary")
+@app.get("/api/sales/summary")
 async def read_summary_data():
     """
     Return some basic KPIs (Key Performance Indicators)
@@ -33,5 +33,10 @@ async def read_summary_data():
         # total quantity sold (if there is a "Quantity" column)
         "total_quantity_sold": int(df["Quantity"].sum()) if "Quantity" in df.columns else None
     }
+
+@app.get("/api/sales/kpis")
+async def read_kpis(country: str):
+    """KPIs based on country"""
+    return explorer.kpis(country=country)
 
   
