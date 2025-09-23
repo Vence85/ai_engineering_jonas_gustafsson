@@ -18,7 +18,7 @@ class IrisInput(BaseModel):
     PetalWidthCm: float = Field()
 
 class PredictionOutput(BaseModel):
-    predicted_flower = str
+    predicted_flower: str
 
 
 if __name__ == "__main__":
