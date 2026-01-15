@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from pydantic_ai import Agent
 from dotenv import load_dotenv
 from utils import query_duckdb
@@ -10,10 +11,14 @@ app = FastAPI()
 
 agent = Agent(model="google-gla:gemini-2.5-flash", output_type=Movie)
 
+@app.get("/")
+def root():
+    return RedirectResponse(url="/docs")
+
 
 @app.get("/movies")
 async def read_movies():
-    movies = query_duckdb("FROM movies;")
+    movies = query_duckdb("SELECT * FROM movies;")
     return movies.to_dict(orient="records")
 
 
